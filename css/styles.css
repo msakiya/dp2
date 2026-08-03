@@ -318,11 +318,6 @@ img {
     align-items: center;
     overflow: hidden;
     padding: 140px 0 80px;
-    background-color: var(--bg-primary);
-    background-image: linear-gradient(to right, rgba(11, 17, 32, 0.95) 0%, rgba(11, 17, 32, 0.4) 100%), url('../assets/hero.png');
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
 }
 
 .hero-bg-shapes {

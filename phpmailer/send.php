@@ -37,10 +37,10 @@ $DESTINATION_NAME = 'Moises';
 // Configuración SMTP
 $USE_SMTP = true;
 $SMTP_HOST = 'smtp.stackmail.com';
-$SMTP_PORT = 465;
+$SMTP_PORT = 587;
 $SMTP_USER = 'juan@topytop.com';
 $SMTP_PASS = 'Mw197f32e';
-$SMTP_SECURE = PHPMailer::ENCRYPTION_SMTPS;
+$SMTP_SECURE = PHPMailer::ENCRYPTION_STARTTLS;
 
 // ============================================
 // VALIDACIÓN DE DATOS

@@ -162,7 +162,7 @@ try {
 
     $mail->CharSet = 'UTF-8';
     if ($USE_SMTP) {
-        $mail->setFrom($SMTP_USER, 'RC Depósitos Web');
+        $mail->setFrom($SMTP_USER, 'RC Depósitos');
     } else {
         $host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'republicacocinera.com';
         $host = str_replace('www.', '', $host);
@@ -171,8 +171,8 @@ try {
     $mail->addAddress($DESTINATION_EMAIL, $DESTINATION_NAME);
     
     // Aquí puedes reemplazar los correos de ejemplo con los verdaderos cuando los tengas:
-    $mail->addAddress('correo2@ejemplo.com', 'Destinatario 2');
-    $mail->addAddress('correo3@ejemplo.com', 'Destinatario 3');
+    $mail->addAddress('comercial@republicacocinera.com', 'Oswaldo');
+    $mail->addAddress('msakiay15@gmail.com', 'MS14');
 
     $mail->addReplyTo($email, $nombre);
 

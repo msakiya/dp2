@@ -8,6 +8,15 @@ header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST');
 
+// Prevenir que errores de PHP rompan el JSON
+ini_set('display_errors', 0);
+register_shutdown_function(function() {
+    $err = error_get_last();
+    if ($err && in_array($err['type'], [E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR])) {
+        echo json_encode(['success' => false, 'message' => "PHP FATAL ERROR: {$err['message']} in {$err['file']} on line {$err['line']}"]);
+    }
+});
+
 // Cargar PHPMailer
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -131,6 +140,8 @@ $textBody .= "Fecha: " . date('d/m/Y H:i') . "\n";
 try {
     $mail = new PHPMailer(true);
 
+    $debugOutput = '';
+
     if ($USE_SMTP) {
         $mail->isSMTP();
         $mail->Host = $SMTP_HOST;
@@ -140,12 +151,11 @@ try {
         $mail->SMTPSecure = $SMTP_SECURE;
         $mail->Port = $SMTP_PORT;
         
-        // Configuración de Debug para guardar en archivo log
-        $mail->SMTPDebug = 2; // Mensajes de cliente y servidor
-        $mail->Debugoutput = function($str, $level) {
-            file_put_contents(__DIR__ . '/smtp_debug.log', gmdate('Y-m-d H:i:s'). " [$level] $str\n", FILE_APPEND | LOCK_EX);
+        $mail->SMTPDebug = 2; 
+        $mail->Debugoutput = function($str, $level) use (&$debugOutput) {
+            $debugOutput .= "[$level] $str\n";
         };
-        $mail->Timeout = 10; // Timeout de 10 segundos para no dejar colgada la web
+        $mail->Timeout = 10;
     } else {
         $mail->isMail();
     }
@@ -173,9 +183,8 @@ try {
     ]);
 
 } catch (Exception $e) {
-    file_put_contents(__DIR__ . '/smtp_debug.log', gmdate('Y-m-d H:i:s'). " [ERROR FINAL] " . $e->getMessage() . "\n", FILE_APPEND | LOCK_EX);
     echo json_encode([
         'success' => false,
-        'message' => 'Hubo un error con el servidor de correo. Revisa smtp_debug.log'
+        'message' => "ERROR PHPMailer: " . $e->getMessage() . "\n\nDEBUG LOG:\n" . $debugOutput
     ]);
 }

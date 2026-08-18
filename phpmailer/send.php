@@ -35,7 +35,7 @@ $DESTINATION_EMAIL = 'moises@republicacocinera.com';
 $DESTINATION_NAME = 'Moises';
 
 // Configuración SMTP
-$USE_SMTP = false; // Cambiado a false para usar el método nativo de PHP (igual que WordPress)
+$USE_SMTP = true;
 $SMTP_HOST = 'smtp.stackmail.com';
 $SMTP_PORT = 587;
 $SMTP_USER = 'juan@topytop.com';

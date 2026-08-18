@@ -139,6 +139,13 @@ try {
         $mail->Password = $SMTP_PASS;
         $mail->SMTPSecure = $SMTP_SECURE;
         $mail->Port = $SMTP_PORT;
+        
+        // Configuración de Debug para guardar en archivo log
+        $mail->SMTPDebug = 2; // Mensajes de cliente y servidor
+        $mail->Debugoutput = function($str, $level) {
+            file_put_contents(__DIR__ . '/smtp_debug.log', gmdate('Y-m-d H:i:s'). " [$level] $str\n", FILE_APPEND | LOCK_EX);
+        };
+        $mail->Timeout = 10; // Timeout de 10 segundos para no dejar colgada la web
     } else {
         $mail->isMail();
     }
@@ -166,8 +173,9 @@ try {
     ]);
 
 } catch (Exception $e) {
+    file_put_contents(__DIR__ . '/smtp_debug.log', gmdate('Y-m-d H:i:s'). " [ERROR FINAL] " . $e->getMessage() . "\n", FILE_APPEND | LOCK_EX);
     echo json_encode([
         'success' => false,
-        'message' => 'Error al enviar: ' . $mail->ErrorInfo
+        'message' => 'Hubo un error con el servidor de correo. Revisa smtp_debug.log'
     ]);
 }

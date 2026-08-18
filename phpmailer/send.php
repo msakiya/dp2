@@ -80,7 +80,7 @@ $email = htmlspecialchars($email, ENT_QUOTES, 'UTF-8');
 // CONSTRUIR EL EMAIL
 // ============================================
 
-$subject = "Nuevo contacto desde RC Depósitos — $nombre";
+$subject = "Nuevo Lead de RC Depósitos";
 
 $htmlBody = <<<HTML
 <!DOCTYPE html>
@@ -90,8 +90,8 @@ $htmlBody = <<<HTML
     <style>
         body { font-family: Arial, sans-serif; background: #f5f5f5; padding: 20px; }
         .container { max-width: 600px; margin: 0 auto; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
-        .header { background: #0B0F1A; padding: 30px; text-align: center; }
-        .header h1 { color: #F5C518; margin: 0; font-size: 24px; }
+        .header { background: #15B77E; padding: 30px; text-align: center; }
+        .header h1 { color: #FFFFFF; margin: 0; font-size: 24px; }
         .content { padding: 30px; }
         .field { margin-bottom: 20px; }
         .field-label { font-weight: bold; color: #333; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
@@ -103,9 +103,9 @@ $htmlBody = <<<HTML
     <div class="container">
         <div class="header">
             <h1>📦 RC Depósitos</h1>
-            <p style="color: #fff; margin: 10px 0 0; font-size: 14px;">Nuevo contacto desde la web</p>
         </div>
         <div class="content">
+            <p style="font-size: 16px; color: #333; margin-top: 0; margin-bottom: 25px;">Hola, hay un nuevo lead para RC Depósitos.</p>
             <div class="field">
                 <div class="field-label">Nombre completo</div>
                 <div class="field-value">{$nombre}</div>
@@ -120,18 +120,18 @@ $htmlBody = <<<HTML
             </div>
         </div>
         <div class="footer">
-            Enviado desde rc-depositos.com | Fecha: " . date('d/m/Y H:i') . "
+            Este lead viene gracias a RC.com/depositos.
         </div>
     </div>
 </body>
 </html>
 HTML;
 
-$textBody = "Nuevo contacto desde RC Depósitos\n\n";
+$textBody = "Hola, hay un nuevo lead para RC Depósitos.\n\n";
 $textBody .= "Nombre: {$nombre}\n";
 $textBody .= "Teléfono: {$telefono}\n";
-$textBody .= "Email: {$email}\n";
-$textBody .= "Fecha: " . date('d/m/Y H:i') . "\n";
+$textBody .= "Email: {$email}\n\n";
+$textBody .= "Este lead viene gracias a RC.com/depositos.\n";
 
 // ============================================
 // ENVIAR CON PHPMailer

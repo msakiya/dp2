@@ -22,17 +22,16 @@ require 'SMTP.php';
 // ============================================
 
 // Correo destino (donde recibirás los mensajes)
-$DESTINATION_EMAIL = 'tu-email@ejemplo.com';  // <-- CAMBIA ESTO
-$DESTINATION_NAME = 'RC Depósitos';
+$DESTINATION_EMAIL = 'moises@republicacocinera.com';
+$DESTINATION_NAME = 'Moises';
 
-// Configuración SMTP (opcional, para enviar desde tu servidor)
-// Si no configuras SMTP, usa mail() de PHP (menos confiable)
-$USE_SMTP = false;
-$SMTP_HOST = 'smtp.gmail.com';
-$SMTP_PORT = 587;
-$SMTP_USER = 'tu-cuenta@gmail.com';  // <-- CAMBIA ESTO
-$SMTP_PASS = 'tu-contraseña-o-app-password';  // <-- CAMBIA ESTO
-$SMTP_SECURE = PHPMailer::ENCRYPTION_STARTTLS;
+// Configuración SMTP
+$USE_SMTP = true;
+$SMTP_HOST = 'smtp.stackmail.com';
+$SMTP_PORT = 465;
+$SMTP_USER = 'juan@topytop.com';
+$SMTP_PASS = 'Mw197f32e';
+$SMTP_SECURE = PHPMailer::ENCRYPTION_SMTPS;
 
 // ============================================
 // VALIDACIÓN DE DATOS
@@ -145,8 +144,13 @@ try {
     }
 
     $mail->CharSet = 'UTF-8';
-    $mail->setFrom($email, $nombre);
+    $mail->setFrom($SMTP_USER, 'RC Depósitos Web');
     $mail->addAddress($DESTINATION_EMAIL, $DESTINATION_NAME);
+    
+    // Aquí puedes reemplazar los correos de ejemplo con los verdaderos cuando los tengas:
+    $mail->addAddress('correo2@ejemplo.com', 'Destinatario 2');
+    $mail->addAddress('correo3@ejemplo.com', 'Destinatario 3');
+
     $mail->addReplyTo($email, $nombre);
 
     $mail->isHTML(true);
